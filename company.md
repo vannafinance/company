@@ -49,7 +49,7 @@ How it makes money: a share of the interest borrowers pay to lenders, plus fees 
 | Solana testnet program transactions scanned | 6,758 (since 29 Sep 2026) | 24 Nov 2026 |
 | Solana testnet collateral posted / borrowed | $890K / $214K (test funds) | 24 Nov 2026 |
 | Solana testnet bad debt | $0 | 24 Nov 2026 |
-| Simulated instant price drop on the testnet book, no liquidations allowed | $0 bad debt up to -40%; $98 (0.08% of debt) at -50%. SOL had already fallen 31% since 29 Oct | 24 Nov 2026 |
+| Simulated 50% crash on the live testnet book, with liquidations running | $0 bad debt, even when each liquidation fills 10 points late (385 borrower accounts; SOL, staking tokens and xStocks fall together) | 24 Nov 2026 |
 | Backtest of the liquidation rules on SOL 1-minute prices, Aug 2020 to Nov 2026 | No bad debt at any leverage tested when liquidations land within 1 minute (9,060 loans per strategy); directional loans at 75% of max borrow lose 0.07% per 30 days if they land an hour late | 24 Nov 2026 |
 | Stellar testnet accounts / collateral / borrowed | 39 / $94K / $22K (test funds) | 24 Nov 2026 |
 | Waitlist sign-ups | 1,515 (opened 10 Oct 2026; ~450 in the first two days; 840 by 2 Nov) | 24 Nov 2026 |
@@ -147,7 +147,7 @@ No agent can override the on-chain health check, and none holds a user's key.
 2. **Investigate:** Gemini 3.8 Flash on Google Vertex AI reads the live account with 30 read-only tools (health, capacity, prices, pool rates, perps, vaults, prediction markets, what-if simulation).
 3. **Size:** the model never picks an amount. Vanna's code turns the request into exact amounts with the protocol's own maths.
 4. **Review:** a frozen plan of up to 8 transactions with each step, its amount, warnings and health before and after. Valid for 5 minutes.
-5. **Execute:** every step is re-checked against live data, built, simulated, and signed by the trader's own wallet. A borrow, withdrawal, swap or farm step that would take health below 1.15 pauses the plan; perp steps follow the contract's own line.
+5. **Execute:** every step is re-checked against live data, built, simulated, and signed by the trader's own wallet. A borrow, withdrawal or swap that would take health below 1.15 pauses the plan; farm and perp steps follow the contract's own line.
 6. **Confirm:** a step counts as done only when the chain confirms it.
 
 Copilot covers lending, margin, leverage, spot, farm, perps and prediction markets. Options are placed from the options builder. It does not place stop-losses, limit or scheduled orders, predict prices, or act without approval.
@@ -233,7 +233,7 @@ Most of DeFi is complementary to us: lending markets, perp exchanges, options an
 | | Lends more than you deposit | Credit usable across other protocols' venues | Derivatives in one health factor | Non-custodial |
 |---|---|---|---|---|
 | Aave, Morpho, Kamino (complementary) | No | No | No | Yes |
-| Drift, Hyperliquid (complementary) | Partly (within their own venue) | No | Yes | Yes |
+| Hyperliquid (complementary) | Partly (within their own venue) | No | Yes | Yes |
 | Gearbox (EVM) | Yes | Partly (lending and spot venues) | No | Yes |
 | Aave V4 | No | Partly (spokes within Aave) | No | Yes |
 | Project 0 (Solana) | No | Partly (Solana lending markets, not perps) | No | Yes |
@@ -243,7 +243,7 @@ Most of DeFi is complementary to us: lending markets, perp exchanges, options an
 | | What they do well | Where their credit stops | How Vanna relates |
 |---|---|---|---|
 | Aave, Morpho, Kamino | Deep, proven lending liquidity | Less than you deposit; loops lever one asset pair inside one protocol | Complementary: a place borrowed funds earn, and a source of demand for both |
-| Hyperliquid, Drift, Phoenix | Fast perps, cross-margin inside the venue | Leverage is synthetic and stays on that venue | Complementary: Vanna brings them margin and hedged volume |
+| Hyperliquid, Phoenix | Fast perps, cross-margin inside the venue | Leverage is synthetic and stays on that venue | Complementary: Vanna brings them margin and hedged volume |
 | Twyne | Frees unused borrowing power inside a lending market | The credit stays in that lending market | Complementary: a Twyne borrower could use Vanna to take credit further |
 | Gearbox | Credit accounts that lend above collateral over tokenized positions | Perps, options and prediction markets are not in its risk model. On 16 Nov 2026 it announced leverage on tokenized real-world assets through lending markets | Closest on the credit side; its move confirms the demand |
 | Project 0 | One margin view across Solana lending markets | Lending markets only, perps not yet | Closest on Solana |
@@ -338,7 +338,7 @@ Written by the founders on the July 2026 Stellar contracts (v1.1, October 2026).
 | Both chains end to end | 24 Nov 2026 | Solana: 10 of 11 scripts; options matrix 22 of 24. Stellar: every scenario passes, 58 of 58 in the newest |
 | Stress, both chains at once | 24 Nov 2026 | 100 browsing users and 32 wallets transacting: 1 failed page request in 5,551; Stellar 40 of 41 transactions; Solana 88 of 99, where 9 of the 11 others were correct refusals |
 | Load, Stellar | 3 Nov 2026 | 500 simulated accounts, 499 created |
-| Market shock on the live testnet book | 24 Nov 2026 | $0 bad debt at an instant -40%, $98 (0.08% of debt) at -50%, with nobody allowed to liquidate on the way down |
+| 50% crash on the live testnet book | 24 Nov 2026 | $0 bad debt with liquidations running, even when each one fills 10 points late |
 | Backtest on real prices | 24 Nov 2026 | Section 18.2 |
 
 ## 14. Roadmap

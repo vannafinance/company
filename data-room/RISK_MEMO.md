@@ -51,7 +51,9 @@ Loans of one kind reach their line together. Share of a steady 30-day book liqui
 
 If every part of the base book had its worst hour at once, about 53% of it would need liquidating: stablecoins worth about half of all loans in that hour. This is what launch caps, limits by direction, a liquidation path that sells seized collateral in the same transaction, and Risk Guardian are for.
 
-Instant shock on the real testnet book (776 accounts; SOL, staking tokens and xStocks fall together; nobody may liquidate on the way down): $0 bad debt to -40%, $98 at -50% (0.08% of debt), $2,186 at -90% (1.9%).
+**50% crash on the real testnet book, with liquidations running** (385 borrower accounts; SOL, staking tokens and xStocks fall together; the program's own rules): $0 bad debt at -40% and -50%, in steps of 1 to 10 points, even when each liquidation fills one step late. At -60% in 10-point steps filled a step late: $33. Accounts with perp or option positions are not included.
+
+Harsher case, kept as raw data in testnet_book_stress.csv: one instant fall with no liquidation allowed.
 
 ## 5. Projected book by instrument (planning assumptions)
 | Instrument type | Hedged | Base | Directional |
